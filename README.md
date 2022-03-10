@@ -19,7 +19,6 @@ Examples of disaster categories include shelter, food, safety, etc.
 ## Files
 ### Structure
 ```
-## File structure
 .
 ├── README.md
 ├── app
