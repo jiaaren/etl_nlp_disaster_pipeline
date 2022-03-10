@@ -1,12 +1,15 @@
 # Analyze Disaster Response Messages
 
 ## Installations
- - NumPy
- - Pandas
- - Seaborn
- - Matplotlib
- - Sklearn
- - Flask
+- plotly==2.0.15
+- pandas==0.23.3
+- numpy==1.12.1
+- nltk==3.2.5
+- Flask==0.12.5
+- joblib==0.11
+- SQLAlchemy==1.2.19
+- scikit-learn==0.19.1
+
 
 ## Project Motivation
 To analyze disaster messages data from [Appen](https://appen.com/) for quick classification of messages into categories, resulting in efficient responses from appropriate disaster relief agencies.
@@ -49,5 +52,25 @@ Examples of disaster categories include shelter, food, safety, etc.
 
 4. Click the `PREVIEW` button to open the homepage
 
+## Preview
+### Homepage
+<img src='./img/homepage.PNG'>
+
+### Results
+<img src='./img/results.PNG'>
+
+### Probability of categories of each result
+<img src='./img/probability.PNG'>
+
 ## Acknowledgements and references
-- 
+- [Source of disaster messages](https://appen.com/)
+- [Boostrap 3.3.7 physical file as link is broken](https://blog.getbootstrap.com/2016/07/25/bootstrap-3-3-7-released/)
+
+## Further improvements
+1. Applying SMOTE for imbalanced datasets
+  - [machinelearningmastery](https://machinelearningmastery.com/smote-oversampling-for-imbalanced-classification/)
+  - [Kaggle - dealing with imbalanced data](https://www.kaggle.com/tboyle10/methods-for-dealing-with-imbalanced-data)
+2. Additional practices to improve text classification model
+  - [Analytics Vidya Reference](https://www.analyticsvidhya.com/blog/2015/10/6-practices-enhance-performance-text-classification-model/)
+  - [Kaggle Extensive Data Feature Engineering](https://www.kaggle.com/shivamb/extensive-text-data-feature-engineering)
+3. [Gensim Word2Vec](https://www.kaggle.com/pierremegret/gensim-word2vec-tutorial)

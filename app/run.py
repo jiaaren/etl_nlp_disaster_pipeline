@@ -105,7 +105,7 @@ def go():
             'layout': {
                 'title': 'Probability of each disaster message category',
                 'yaxis': {
-                    'title': "Count"
+                    'title': "Probability"
                 },
                 'xaxis': {
                     'title': "Message category"

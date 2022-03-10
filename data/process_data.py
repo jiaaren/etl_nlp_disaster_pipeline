@@ -44,6 +44,12 @@ def save_data(df, database_filename):
     df.to_sql('messages', engine, index=False)
 
 def main():
+    '''
+    Evaluates length of argument passed in, following processed upon successful input length:
+    - loading of data (Extract)
+    - cleaning of data (Transform)
+    - saving of data (Load)
+    '''
     if len(sys.argv) == 4:
 
         messages_filepath, categories_filepath, database_filepath = sys.argv[1:]

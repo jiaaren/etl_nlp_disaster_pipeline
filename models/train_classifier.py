@@ -22,9 +22,9 @@ from sklearn.base import BaseEstimator, TransformerMixin
 # train test split
 from sklearn.model_selection import train_test_split
 # models
-from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.naive_bayes import MultinomialNB
+# grid search
+from sklearn.model_selection import GridSearchCV
 # metrics
 from sklearn.metrics import classification_report, f1_score, precision_score, recall_score, accuracy_score
 # saving model pickle file
@@ -86,7 +86,13 @@ def build_model():
         ('tfidf', TfidfTransformer()),
         ('clf', MultiOutputClassifier(RandomForestClassifier(min_samples_split=2, n_estimators=10)))
     ])
-    return pipeline
+    # Grid search parameters
+    parameters = {
+        'clf__estimator__n_estimators': [10, 20]
+    }
+    # Initialising grid search
+    cv = GridSearchCV(pipeline, param_grid=parameters, cv=3, n_jobs=-1, verbose=1)
+    return cv
 
 def get_all_scores(y_test, y_pred, category_names):
     '''
