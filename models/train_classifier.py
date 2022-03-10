@@ -84,7 +84,7 @@ def build_model():
     pipeline = Pipeline([
         ('vect', CountVectorizer(tokenizer=tokenize)),
         ('tfidf', TfidfTransformer()),
-        ('clf', MultiOutputClassifier(RandomForestClassifier(min_samples_split=2, n_estimators=50)))
+        ('clf', MultiOutputClassifier(RandomForestClassifier(min_samples_split=2, n_estimators=10)))
     ])
     return pipeline
 
@@ -112,13 +112,14 @@ def get_all_scores(y_test, y_pred, category_names):
     return pd.DataFrame(index=category_names, data={'precision':prec, 'recall':recall, 'f1':f1,\
                                                     'accuracy': accuracy, 'support':support})
 
-def print_weighted(y_test, y_pred):
+def print_weighted(y_test, y_pred, category_names):
     '''
     Prints weighted precision, recall f1 and accuracy
     @param - y_test (matrix) - y_test labels
     @param - y_pred (matrix) - y_pred prediction matrix
+    @param - category_names (array) - labels for test set
     '''
-    scores = get_all_scores(y_test, y_pred)
+    scores = get_all_scores(y_test, y_pred, category_names)
     weighted_precision = (scores['precision'] * (scores['support'] / scores['support'].sum())).sum()
     weighted_recall = (scores['recall'] * (scores['support'] / scores['support'].sum())).sum()
     weighted_f1 = (scores['f1'] * (scores['support'] / scores['support'].sum())).sum()
@@ -126,9 +127,9 @@ def print_weighted(y_test, y_pred):
     print(f'Weighted precision: {weighted_precision}')
     print(f'Weighted recall: {weighted_recall}')
     print(f'Weighted f1: {weighted_f1}')
-    print(f'Weighted accuracy: {weighted_accuracy}')
+    print(f'Weighted accuracy: {weighted_accuracy}')    
 
-
+    
 def evaluate_model(model, X_test, Y_test, category_names):
     '''
     Prints model evaluation results
@@ -138,7 +139,7 @@ def evaluate_model(model, X_test, Y_test, category_names):
     @param - category_names (array) - multi-label category names 
     '''
     Y_pred = model.predict(X_test)
-    print_weighted(Y_test, Y_pred)
+    print_weighted(Y_test, Y_pred, category_names)
 
 # https://machinelearningmastery.com/save-load-machine-learning-models-python-scikit-learn/
 def save_model(model, model_filepath):
