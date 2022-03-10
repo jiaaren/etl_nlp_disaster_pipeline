@@ -4,11 +4,11 @@ import pandas as pd
 
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
-
+ 
 from flask import Flask
 from flask import render_template, request, jsonify
 from plotly.graph_objs import Bar
-from sklearn.externals import joblib
+import joblib
 from sqlalchemy import create_engine
 
 
@@ -39,12 +39,10 @@ model = joblib.load("../models/classifier.pkl")
 def index():
     
     # extract data needed for visuals
-    # TODO: Below is an example - modify to extract data for your own visuals
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
     
     # create visuals
-    # TODO: Below is an example - modify to create your own visuals
     graphs = [
         {
             'data': [
@@ -80,21 +78,57 @@ def go():
     # save user input in query
     query = request.args.get('query', '') 
 
+    # category labels
+    cat_labels = df.columns[4:]
+    
     # use model to predict classification for query
     classification_labels = model.predict([query])[0]
-    classification_results = dict(zip(df.columns[4:], classification_labels))
+    classification_results = dict(zip(cat_labels, classification_labels))
+    classification_proba = model.predict_proba([query])
+    proba_arr = []
+    for x in classification_proba:
+        try:
+            proba_arr.append(x[0][1])
+        except:
+            proba_arr.append(0)
+    proba_dict = dict(zip(cat_labels, proba_arr))
+    
+    # create visuals
+    graphs = [ 
+        {
+            'data': [
+                Bar(
+                    x=list(proba_dict.keys()),
+                    y=list(proba_dict.values())
+                ) 
+            ],
+            'layout': {
+                'title': 'Probability of each disaster message category',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Message category"
+                }
+            }
+        }
+    ]
+    
+    # encode plotly graphs in JSON
+    ids = ["graph-{}".format(i) for i, _ in enumerate(graphs)]
+    graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
 
     # This will render the go.html Please see that file. 
     return render_template(
-        'go.html',
+        'go.html', 
         query=query,
-        classification_result=classification_results
+        classification_result=classification_results,
+        ids=ids,
+        graphJSON=graphJSON
     )
-
 
 def main():
     app.run(host='0.0.0.0', port=3000, debug=True)
-
 
 if __name__ == '__main__':
     main()
