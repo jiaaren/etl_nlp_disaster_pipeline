@@ -41,7 +41,7 @@ def save_data(df, database_filename):
     @param - database_filename (str) - .db file name, needs to have .db as extension
     '''
     engine = create_engine(f'sqlite:///{database_filename}')
-    df.to_sql('messages', engine, index=False)
+    df.to_sql('messages', engine, index=False, if_exists='replace')
 
 def main():
     '''
