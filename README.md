@@ -17,6 +17,31 @@ To analyze disaster messages data from [Appen](https://appen.com/) for quick cla
 Examples of disaster categories include shelter, food, safety, etc.
 
 ## Files
+### Structure
+```
+## File structure
+.
+├── README.md
+├── app
+│   ├── run.py
+│   ├── static
+│   │   ├── bootstrap-theme.min.css
+│   │   └── bootstrap.min.css
+│   └── templates
+│       ├── go.html
+│       └── master.html
+├── data
+│   ├── disaster_categories.csv
+│   ├── disaster_messages.csv
+│   └── process_data.py
+├── img
+│   ├── homepage.PNG
+│   ├── probability.PNG
+│   └── results.PNG
+└── models
+    └── train_classifier.py
+```
+
 ### Dataset
 - `data/disaster_messages.csv` - Dataset containing messages in string format
 - `data/disaster_categories.csv` - Dataset which corresponds to `disaster_messages.csv` via `id`, and which contains labels for all 36 disaster categories
@@ -68,9 +93,9 @@ Examples of disaster categories include shelter, food, safety, etc.
 
 ## Further improvements
 1. Applying SMOTE for imbalanced datasets
-  - [machinelearningmastery](https://machinelearningmastery.com/smote-oversampling-for-imbalanced-classification/)
-  - [Kaggle - dealing with imbalanced data](https://www.kaggle.com/tboyle10/methods-for-dealing-with-imbalanced-data)
+   - [machinelearningmastery](https://machinelearningmastery.com/smote-oversampling-for-imbalanced-classification/)
+   - [Kaggle - dealing with imbalanced data](https://www.kaggle.com/tboyle10/methods-for-dealing-with-imbalanced-data)
 2. Additional practices to improve text classification model
-  - [Analytics Vidya Reference](https://www.analyticsvidhya.com/blog/2015/10/6-practices-enhance-performance-text-classification-model/)
-  - [Kaggle Extensive Data Feature Engineering](https://www.kaggle.com/shivamb/extensive-text-data-feature-engineering)
+   - [Analytics Vidya Reference](https://www.analyticsvidhya.com/blog/2015/10/6-practices-enhance-performance-text-classification-model/)
+   - [Kaggle Extensive Data Feature Engineering](https://www.kaggle.com/shivamb/extensive-text-data-feature-engineering)
 3. [Gensim Word2Vec](https://www.kaggle.com/pierremegret/gensim-word2vec-tutorial)
